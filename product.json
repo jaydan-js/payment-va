@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Kopi Arabika",
+        "price": 50000,
+        "image": "arabika.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Kopi Robusta",
+        "price": 45000,
+        "image": "robusta.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Kopi Liberika",
+        "price": 150000,
+        "image": "liberika.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Kopi Excelsa",
+        "price": 60000,
+        "image": "excelsa.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Kopi Gayo",
+        "price": 55000,
+        "image": "Gayo.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Kopi Jamaika",
+        "price": "60000",
+        "image": "jamaika.jpg"
+    }
+]

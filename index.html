@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="ajax.js"></script>
+    <link rel="stylesheet" href="styles.css">
+
+
+   
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fas fa-coffee"></i> Toko Kopi Online</a>
+            <a href="index.html" class="btn btn-outline-light">Kembali ke Beranda</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <h1 class="text-center my-4">Keranjang Belanja</h1>
+
+       
+
+<div class="row">
+    <div class="col-md-8">
+        <div id="checkout-items" class="mb-4"></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Ringkasan Belanja</h4>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Total Item:</span>
+                    <span id="total-items">0</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Total Harga:</span>
+                    <span id="total-amount">Rp 0</span>
+                </div>
+                <select id="select-bank" class="form-control mb-3">
+                    <option value="BCA">BCA Virtual Account</option>
+                    <option value="Mandiri">Mandiri Virtual Account</option>
+                    <option value="BRI">BRI Virtual Account</option>
+                    <option value="BSI">BSI Virtual Account</option>
+                    <option value="Muamalat">Muamalat Virtual Account</option>
+                </select>
+                <button id="btn-bayar" class="btn btn-success btn-block mb-2">Bayar Sekarang</button>
+                <button id="btn-hapus" class="btn btn-outline-danger btn-block">Hapus Item Terpilih</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="payment-info" class="mt-4 card" style="display:none;">
+            <div class="card-body">
+                <h3 class="card-title">Informasi Pembayaran</h3>
+                <p><i class="fas fa-university"></i> Bank: <span id="bank-name"></span></p>
+                <p><i class="fas fa-money-bill-wave"></i> Total: Rp <span id="total-price"></span></p>
+                <p><i class="fas fa-key"></i> Kode Pembayaran: <span id="code" class="font-weight-bold"></span></p>
+                <p><i class="fas fa-clock"></i> Kode berlaku selama: <span id="timer">01:00</span></p>
+                <button id="btn-cancel-payment" class="btn btn-outline-secondary mt-3">Batalkan Pembayaran</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let checkoutItems = document.getElementById("checkout-items");
+            let totalAmount = 0;
+
+            function displayItems() {
+                checkoutItems.innerHTML = "";
+                totalAmount = 0;
+
+                cart.forEach((item, index) => {
+                    checkoutItems.innerHTML += `
+                        
+                <div class="card product-card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="${item.image || 'cofeehero.jpg'}" class="img-fluid rounded" alt="${item.name}">
+                            </div>
+                            <div class="col-md-7">
+                                <h5>${item.name}</h5>
+                                <p class="text-muted mb-0">Rp ${item.price.toLocaleString()}</p>
+                            </div>
+                            <div class="col-md-3 text-right">
+                                <input type="checkbox" class="select-item" data-index="${index}"> <!-- Checkbox ditambahkan di sini -->
+                                <button class="btn btn-outline-danger delete-item" data-index="${index}">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                    `;
+                    totalAmount += item.price;
+                });
+
+                document.getElementById("total-items").textContent = cart.length;
+                document.getElementById("total-amount").textContent = `Rp ${totalAmount.toLocaleString()}`;
+            }
+
+            function generateVirtualAccount() {
+                return "VA-" + Math.floor(100000000 + Math.random() * 900000000);
+            }
+
+            document.getElementById("btn-bayar").addEventListener("click", function() {
+                const selectedItems = Array.from(document.querySelectorAll('.select-item:checked'));
+                
+                if (selectedItems.length === 0) {
+                    alert("Pilih minimal satu item untuk dibayar!");
+                    return;
+                }
+
+                let selectedTotalAmount = 0;
+                selectedItems.forEach(item => {
+                    const index = parseInt(item.getAttribute("data-index"));
+                    selectedTotalAmount += cart[index].price;
+                });
+
+                let selectedBank = document.getElementById("select-bank").value;
+                let paymentCode = generateVirtualAccount();
+
+                document.getElementById("bank-name").textContent = selectedBank;
+                document.getElementById("total-price").textContent = selectedTotalAmount.toLocaleString();
+                document.getElementById("code").textContent = paymentCode;
+                document.getElementById("payment-info").style.display = "block";
+
+                let countdown = 60; // Diubah menjadi 60 detik (1 menit)
+                let timer = setInterval(() => {
+                    countdown--;
+                    document.getElementById("timer").textContent = `${String(Math.floor(countdown / 60)).padStart(2, '0')}:${String(countdown % 60).padStart(2, '0')}`;
+                    if (countdown <= 0) {
+                        clearInterval(timer);
+                        document.getElementById("payment-info").innerHTML += "<p class='text-danger'>Kode Pembayaran Kedaluwarsa!</p>";
+                    }
+                }, 1000);
+            });
+
+            document.getElementById("btn-hapus").addEventListener("click", function() {
+                if (cart.length === 0) {
+                    alert("Tidak ada item yang bisa dihapus.");
+                    return;
+                }
+                localStorage.removeItem("cart");
+                cart = [];
+                displayItems();
+            });
+
+            document.getElementById("btn-cancel-payment").addEventListener("click", function() {
+                document.getElementById("payment-info").style.display = "none";
+            });
+
+            document.addEventListener("click", function(event) {
+                if (event.target.classList.contains("delete-item")) {
+                    let index = event.target.getAttribute("data-index");
+                    cart.splice(index, 1);
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    displayItems();
+                }
+            });
+
+            displayItems();
+        });
+    </script>
+</body>
+</html>
+
