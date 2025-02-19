@@ -1,0 +1,45 @@
+[
+    {
+        "id": 1,
+        "name": "Kopi Arabika",
+        "description": "Kopi premium dengan cita rasa fruity dan aroma yang khas.",
+        "price": 50000,
+        "image": "arabika.jpg",
+        "isBestSeller": true
+    },
+    {
+        "id": 2,
+        "name": "Kopi Robusta",
+        "description": "Kopi dengan karakter kuat dan rasa yang pekat.",
+        "price": 40000,
+        "image": "robusta.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Kopi Liberika",
+        "description": "Kopi langka dengan cita rasa unik dan eksotis.",
+        "price": 60000,
+        "image": "liberika.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Kopi Excelsa",
+        "description": "Kopi dengan karakter rasa yang kompleks.",
+        "price": 60000,
+        "image": "excelsa.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Kopi Gayo",
+        "description": "Kopi khas Aceh dengan cita rasa yang mendunia.",
+        "price": 60000,
+        "image": "Gayo.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Kopi Jamaika",
+        "description": "Kopi premium dari Jamaika dengan cita rasa istimewa.",
+        "price": 60000,
+        "image": "jamaika.jpg"
+    }
+]
