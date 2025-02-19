@@ -7,6 +7,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -62,86 +63,8 @@
     <section id="products" class="py-5">
         <div class="container">
             <h2 class="text-center mb-4">Produk Kami</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <div class="badge badge-new position-absolute">Best Seller</div>
-                        <img src="arabika.jpg" class="card-img-top" alt="Kopi Arabika">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Arabika</h5>
-                            <p class="card-text">Kopi premium dengan cita rasa fruity dan aroma yang khas.</p>
-                            <p class="card-text"><strong>Rp 50.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Arabika" data-price="50000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <img src="robusta.jpg" class="card-img-top" alt="Kopi Robusta">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Robusta</h5>
-                            <p class="card-text">Kopi dengan karakter kuat dan rasa yang pekat.</p>
-                            <p class="card-text"><strong>Rp 40.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Robusta" data-price="40000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <img src="liberika.jpg" class="card-img-top" alt="Kopi Liberika">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Liberika</h5>
-                            <p class="card-text">Kopi langka dengan cita rasa unik dan eksotis.</p>
-                            <p class="card-text"><strong>Rp 60.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Liberika" data-price="60000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <img src="excelsa.jpg" class="card-img-top" alt="Kopi Excelsa">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Excelsa</h5>
-                            <p class="card-text">Kopi dengan karakter rasa yang kompleks.</p>
-                            <p class="card-text"><strong>Rp 60.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Excelsa" data-price="60000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <img src="Gayo.jpg" class="card-img-top" alt="Kopi Gayo">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Gayo</h5>
-                            <p class="card-text">Kopi khas Aceh dengan cita rasa yang mendunia.</p>
-                            <p class="card-text"><strong>Rp 60.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Gayo" data-price="60000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card h-100 shadow-sm">
-                        <img src="jamaika.jpg" class="card-img-top" alt="Kopi Jamaika">
-                        <div class="card-body">
-                            <h5 class="card-title">Kopi Jamaika</h5>
-                            <p class="card-text">Kopi premium dari Jamaika dengan cita rasa istimewa.</p>
-                            <p class="card-text"><strong>Rp 60.000</strong></p>
-                            <button class="btn btn-primary btn-block btn-add" data-name="Kopi Jamaika" data-price="60000">
-                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="row" id="product-list">
+                <!-- Produk akan dirender di sini -->
             </div>
         </div>
     </section>
@@ -168,27 +91,63 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.btn-add').click(function() {
-                let item = {
-                    name: $(this).data('name'),
-                    price: $(this).data('price')
-                };
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                cart.push(item);
-                localStorage.setItem('cart', JSON.stringify(cart));
-                alert(item.name + ' telah ditambahkan ke keranjang!');
-            });
 
-            // Smooth scroll for navigation
-            $('a[href^="#"]').on('click', function(e) {
-                e.preventDefault();
-                var target = $(this.hash);
-                $('html, body').animate({
-                    scrollTop: target.offset().top - 70
-                }, 1000);
-            });
+       
+
+        $(document).ready(function() {
+        $.ajax({
+            url: 'ajax.json', // Pastikan path ini benar
+            method: 'GET',
+            dataType: 'json',
+            success: (response) => {
+                this.products = response; // Simpan data produk ke variabel
+                renderProducts(this.products); // Panggil fungsi untuk merender produk
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                console.error('Error fetching products:', textStatus, errorThrown);
+            }
         });
+
+    function renderProducts(products) {
+        const productList = $('#product-list');
+        productList.empty(); // Kosongkan daftar produk sebelum menambahkan yang baru
+        products.forEach(product => {
+            productList.append(`
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card h-100 shadow-sm">
+                        ${product.isBestSeller ? '<div class="badge badge-new position-absolute">Best Seller</div>' : ''}
+                        <img src="${product.image}" class="card-img-top" alt="${product.name}" />
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">${product.description}</p>
+                            <p class="card-text"><strong>Rp ${product.price.toLocaleString()}</strong></p>
+                            <button class="btn btn-primary btn-block btn-add" data-name="${product.name}" data-price="${product.price}">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        });
+
+        // Menambahkan event listener untuk tombol "Tambah ke Keranjang"
+        $('.btn-add').click(function() {
+            const item = {
+                name: $(this).data('name'),
+                price: parseInt($(this).data('price')),
+                image: $(this).siblings('img').attr('src') // Ambil gambar produk
+            };
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(item);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(item.name + ' telah ditambahkan ke keranjang!');
+        });
+    }
+});
+
+          
+
+        
     </script>
 </body>
 </html>
