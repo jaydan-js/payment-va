@@ -96,12 +96,12 @@
 
         $(document).ready(function() {
         $.ajax({
-            url: 'ajax.json', // Pastikan path ini benar
+            url: 'ajax.json', 
             method: 'GET',
             dataType: 'json',
             success: (response) => {
                 this.products = response; // Simpan data produk ke variabel
-                renderProducts(this.products); // Panggil fungsi untuk merender produk
+                renderProducts(this.products); // fungsi merender produk
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 console.error('Error fetching products:', textStatus, errorThrown);
@@ -130,12 +130,12 @@
             `);
         });
 
-        // Menambahkan event listener untuk tombol "Tambah ke Keranjang"
+        // event listener untuk tombol "Tambah ke Keranjang"
         $('.btn-add').click(function() {
             const item = {
                 name: $(this).data('name'),
                 price: parseInt($(this).data('price')),
-                image: $(this).siblings('img').attr('src') // Ambil gambar produk
+                image: $(this).siblings('img').attr('src') // gambar produk
             };
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart.push(item);
