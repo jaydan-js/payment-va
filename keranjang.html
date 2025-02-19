@@ -135,7 +135,7 @@
                 document.getElementById("code").textContent = paymentCode;
                 document.getElementById("payment-info").style.display = "block";
 
-                let countdown = 60; // Diubah menjadi 60 detik (1 menit)
+                let countdown = 60; // hitung mundur kadaluarsa 60 detik (1 menit)
                 let timer = setInterval(() => {
                     countdown--;
                     document.getElementById("timer").textContent = `${String(Math.floor(countdown / 60)).padStart(2, '0')}:${String(countdown % 60).padStart(2, '0')}`;
